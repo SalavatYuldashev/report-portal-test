@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 
 public class DashboardsPage {
     WebDriver driver;
-    private final String DASHBOARDS_PAGE_URL = "https://www.dashboards.com/";
     private final By dashboardsCheckElement = By.xpath("//button[.//span[normalize-space()='Add New Dashboard']]");
 
     public DashboardsPage(WebDriver driver) {
