@@ -19,7 +19,7 @@ public class LoginPage {
     private final By usernameInputBy = By.name("login");
     private final By passwordInputBy = By.name("password");
     private final By loginButtonBy = By.xpath("//button[@type='submit']");
-    private final By loginPageCheckerBy = By.xpath("//span[normalize-space()='Welcome, login to your account']");
+    private final By loginPageCheckerBy = By.xpath("//span[normalize-space()='Welcome,']");
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
