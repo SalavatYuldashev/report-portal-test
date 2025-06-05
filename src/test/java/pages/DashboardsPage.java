@@ -40,7 +40,7 @@ public class DashboardsPage {
 
     }
 
-    public AddNewDashboardPage clickOnAddNewDashboardButton() {
+    public AddNewDashboardModalPage clickOnAddNewDashboardButton() {
         WebElement addNewDashboardButton;
         try {
             addNewDashboardButton = wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardsCheckerBy));
@@ -50,6 +50,6 @@ public class DashboardsPage {
             logger.info("Кнопка \"Add New Dashboard\" не найдена на странпице.");
             throw new RuntimeException(e);
         }
-        return new AddNewDashboardPage(driver);
+        return new AddNewDashboardModalPage(driver);
     }
 }

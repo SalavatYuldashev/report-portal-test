@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -24,7 +25,12 @@ public class BaseTest {
         options.addArguments("--disable-password-manager-reauthentication");
         options.addArguments("--disable-features=AutofillServerCommunication,PasswordImport");
         options.addArguments("--password-store=basic"); // ←
-        options.addArguments("disable-infobars");
+        options.addArguments("--disable-infobars");
+        options.setExperimentalOption("prefs", Map.of(
+                "profile.password_manager_enabled", false, // Отключает менеджер паролей Chrome
+                "credentials_enable_service", false, // Отключает службу учетных данных
+                "profile.password_manager_leak_detection_enabled", false // Отключает обнаружение утечек паролей
+        ));
 
         WebDriverManager.chromedriver().setup();
         logger.info("Chrome driver установлен");

@@ -3,8 +3,7 @@ package ui;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.openqa.selenium.WebDriver;
-import pages.AddNewDashboardPage;
+import pages.AddNewDashboardModalPage;
 import pages.DashboardsPage;
 import pages.HomePage;
 import pages.LoginPage;
@@ -17,7 +16,7 @@ public class AddWidgetTest extends BaseTest {
     HomePage homePage;
     LoginPage loginPage;
     DashboardsPage dashboardsPage;
-    AddNewDashboardPage addNewDashboardPage;
+    AddNewDashboardModalPage addNewDashboardModalPage;
 
 
     @Test(description = " Проверка создания виджета")
@@ -28,8 +27,8 @@ public class AddWidgetTest extends BaseTest {
         Assert.assertTrue(homePage.isAt(), "Неверная страница.");
         dashboardsPage = homePage.clickDashboardsButton();
         Assert.assertTrue(dashboardsPage.isAt(), "Неверная страница.");
-        addNewDashboardPage = dashboardsPage.clickOnAddNewDashboardButton();
-        Assert.assertTrue(addNewDashboardPage.isAt(), "Неверная страница.");
+        addNewDashboardModalPage = dashboardsPage.clickOnAddNewDashboardButton();
+        Assert.assertTrue(addNewDashboardModalPage.isAt(), "Неверная страница.");
 
     }
 }
