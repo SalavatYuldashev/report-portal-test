@@ -1,12 +1,10 @@
 package base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import enums.BrowserType;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.*;
+import utils.WebDriverFactory;
 
-import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -16,35 +14,21 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void setUpDriver() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-notifications");
-        options.addArguments("--disable-save-password-bubble");
-        options.addArguments("--disable-autofill-keyboard-accessory-view");
-        options.addArguments("--disable-credentials-enable-service");
-        options.addArguments("--disable-password-manager-reauthentication");
-        options.addArguments("--disable-features=AutofillServerCommunication,PasswordImport");
-        options.addArguments("--password-store=basic"); // ←
-        options.addArguments("--disable-infobars");
-        options.setExperimentalOption("prefs", Map.of(
-                "profile.password_manager_enabled", false, // Отключает менеджер паролей Chrome
-                "credentials_enable_service", false, // Отключает службу учетных данных
-                "profile.password_manager_leak_detection_enabled", false // Отключает обнаружение утечек паролей
-        ));
-
-        WebDriverManager.chromedriver().setup();
-        logger.info("Chrome driver установлен");
-        this.driver = new ChromeDriver(options);
-        logger.info("Браузер Chrome открыт");
+    @Parameters("browser")
+    public void setUpDriver(@Optional("chrome") String browserName) {
+        BrowserType browser = BrowserType.valueOf(browserName.toUpperCase());
+        driver = WebDriverFactory.createDriver(browser);
+        logger.info("Открыт браузер: " + browser);
         driver.manage().window().maximize();
         logger.info("Размер окна браузера изменен на максимальный");
     }
 
     @AfterMethod
     public void closeDriver() {
-        driver.quit();
-        logger.info("Браузер закрыт");
+        if (driver != null) {
+            driver.quit();
+            logger.info("Драйвер завершил работу.");
+        }
+
     }
-
-
 }
