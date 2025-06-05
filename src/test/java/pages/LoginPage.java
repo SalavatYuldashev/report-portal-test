@@ -59,7 +59,7 @@ public class LoginPage {
 
     public void clickLoginButton() {
         try {
-            WebElement loginButton = wait.until(ExpectedConditions.visibilityOfElementLocated(loginButtonBy));
+            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(loginButtonBy));
             loginButton.click();
             logger.log(Level.INFO, "Была нажата кнопка \"Login\".");
         } catch (TimeoutException e) {

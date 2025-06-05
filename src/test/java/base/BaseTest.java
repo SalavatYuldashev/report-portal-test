@@ -15,7 +15,7 @@ public class BaseTest {
 
     @BeforeMethod
     @Parameters("browser")
-    public void setUpDriver(@Optional("chrome") String browserName) {
+    public void setUpDriver(@Optional("firefox") String browserName) {
         BrowserType browser = BrowserType.valueOf(browserName.toUpperCase());
         driver = WebDriverFactory.createDriver(browser);
         logger.info("Открыт браузер: " + browser);

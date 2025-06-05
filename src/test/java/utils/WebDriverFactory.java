@@ -6,6 +6,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.Map;
@@ -29,7 +30,10 @@ public class WebDriverFactory {
                 WebDriverManager.firefoxdriver().setup();
                 logger.info("Драйвер для браузера Firefox установлен");
                 return new FirefoxDriver();
-
+            case EDGE:
+                WebDriverManager.edgedriver().setup();
+                logger.info("Драйвер для браузера Edge установлен");
+                return new EdgeDriver();
             default:
                 throw new IllegalArgumentException("Неизвестный браузер: " + browserType);
         }

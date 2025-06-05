@@ -45,7 +45,7 @@ public class HomePage {
     public DashboardsPage clickDashboardsButton() {
         WebElement dashboardsButton;
         try {
-            dashboardsButton = wait.until(ExpectedConditions.visibilityOfElementLocated(homePageCheckerBy));
+            dashboardsButton = wait.until(ExpectedConditions.elementToBeClickable(homePageCheckerBy));
             dashboardsButton.click();
             logger.log(Level.INFO, "Была нажата кнопка \"Dashboards\".");
         } catch (TimeoutException e) {

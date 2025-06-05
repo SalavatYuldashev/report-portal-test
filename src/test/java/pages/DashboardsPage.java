@@ -17,6 +17,7 @@ public class DashboardsPage {
     WebDriverWait wait;
 
     private final By dashboardsCheckerBy = By.xpath("//button[.//span[normalize-space()='Add New Dashboard']]");
+    private final By specificDashboardButton = By.xpath("  //a[contains(@class, 'dashboardTable__name')]");
 
     public DashboardsPage(WebDriver driver) {
         this.driver = driver;
@@ -37,13 +38,12 @@ public class DashboardsPage {
             logger.warning("Неверная страница! Это страница: " + driver.getCurrentUrl() + e);
             return false;
         }
-
     }
 
     public AddNewDashboardModalPage clickOnAddNewDashboardButton() {
         WebElement addNewDashboardButton;
         try {
-            addNewDashboardButton = wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardsCheckerBy));
+            addNewDashboardButton = wait.until(ExpectedConditions.elementToBeClickable(dashboardsCheckerBy));
             addNewDashboardButton.click();
             logger.log(Level.INFO, "Была нажата кнопка \"Add New Dashboard\".");
         } catch (TimeoutException e) {
@@ -51,5 +51,18 @@ public class DashboardsPage {
             throw new RuntimeException(e);
         }
         return new AddNewDashboardModalPage(driver);
+    }
+
+    public SpecificDashboardPage clickOnSpecificDashboardButton() {
+        WebElement selectedDashboardButton;
+        try {
+            selectedDashboardButton = wait.until(ExpectedConditions.elementToBeClickable(specificDashboardButton));
+            selectedDashboardButton.click();
+            logger.log(Level.INFO, "Был открыт дашборд: " + specificDashboardButton);
+        } catch (Exception e) {
+            logger.info("Dashboard не был найден на странице.");
+            throw new RuntimeException(e);
+        }
+        return new SpecificDashboardPage(driver);
     }
 }
