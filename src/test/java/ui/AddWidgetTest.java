@@ -1,6 +1,6 @@
 package ui;
 
-import base.BaseTest;
+import base.UIBaseTest;
 import config.TestData;
 import io.qameta.allure.*;
 import org.testng.Assert;
@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 @Epic("UI Тесты")
 @Feature("Виджеты")
-public class AddWidgetTest extends BaseTest {
+public class AddWidgetTest extends UIBaseTest {
     private static final Logger logger = Logger.getLogger(AddWidgetTest.class.getName());
 
     HomePage homePage;

@@ -5,6 +5,8 @@
         <classes>
             <class name="ui.AddWidgetTest"/>
             <class name="ui.AddDashboardTest"/>
+            <class name="api.CreateDashboardApiTest"/>
+            <class name="api.CreateDashboardWithMissingNameApiTest"/>
         </classes>
     </test>
     <!--    <test name="ChromeTests">-->

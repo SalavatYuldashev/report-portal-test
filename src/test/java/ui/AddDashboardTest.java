@@ -1,7 +1,7 @@
 package ui;
 
 import config.TestData;
-import base.BaseTest;
+import base.UIBaseTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
@@ -10,7 +10,7 @@ import io.qameta.allure.*;
 
 @Epic("UI Тесты")
 @Feature("Дашборды")
-public class AddDashboardTest extends BaseTest {
+public class AddDashboardTest extends UIBaseTest {
     private static final Logger logger = Logger.getLogger(AddDashboardTest.class.getName());
 
     HomePage homePage;
@@ -25,7 +25,7 @@ public class AddDashboardTest extends BaseTest {
     @Severity(SeverityLevel.BLOCKER)
     public void addDashboardTest() {
         // Arrange: Готовим тестовые данные (имя дашборда) и открываем базовый URL.
-        String expectedDashboardName = TestData.generateNewName(TestData.DASHBOARD_NAME);
+        String expectedDashboardName = TestData.generateNewName(TestData.UI_DASHBOARD_NAME);
         driver.get(TestData.BASE_URL);
 
         // Act: Проходим полный путь пользователя: логин, переход на страницу дашбордов, открытие модального окна и создание нового дашборда.
