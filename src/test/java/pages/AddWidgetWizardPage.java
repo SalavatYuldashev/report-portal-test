@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,6 @@ public class AddWidgetWizardPage {
     private static final Logger logger = Logger.getLogger(AddWidgetWizardPage.class.getName());
     protected WebDriver driver;
     protected WebDriverWait wait;
-
     private final By addWidgetCheckerBy = By.xpath("//div[contains(@class, 'widget-type-selector-heading') " +
             "and normalize-space()='Choose widget type from the list below']");
 
@@ -26,16 +26,15 @@ public class AddWidgetWizardPage {
     private final By addWidgetButtonBy = By.xpath("//button[normalize-space()='Add']");
     private final By selectFilterRadioButton = By.xpath("//label[.//span[contains(@class, 'inputRadio__children-container')]]");
 
-
     public AddWidgetWizardPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(addWidgetCheckerBy));
-            logger.info("Мастер 'ADD NEW WIDGET' загружен и верифицирован.");
+            logger.info("Мастер 'Add New Widget' успешно загружен и верифицирован.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Мастер 'ADD NEW WIDGET' не загрузился. Current URL: " + driver.getCurrentUrl(), e);
-            throw new IllegalStateException("Мастер 'ADD NEW WIDGET' не загрузился. Current URL: " + driver.getCurrentUrl(), e);
+            logger.log(Level.SEVERE, "Мастер 'Add New Widget' не загрузился! Текущий URL: " + driver.getCurrentUrl(), e);
+            throw new IllegalStateException("Мастер 'Add New Widget' не загрузился! Текущий URL: " + driver.getCurrentUrl(), e);
         }
     }
 
@@ -43,23 +42,24 @@ public class AddWidgetWizardPage {
         try {
             return wait.until(ExpectedConditions.visibilityOfElementLocated(addWidgetCheckerBy)).isDisplayed();
         } catch (Exception e) {
-            logger.warning("Ключевой элемент для мастера 'ADD NEW WIDGET' не найден.");
+            logger.warning("Проверка isAt() не удалась: это не мастер создания виджетов.");
             return false;
         }
     }
 
+    @Step("Шаг 1: Выбор типа виджета")
     public void selectWidgetType() {
         try {
             WebElement widgetTypeElement = wait.until(ExpectedConditions.elementToBeClickable(widgetTypeRadioButton));
             widgetTypeElement.click();
-            logger.info("Выбран тип виджета: " + widgetTypeRadioButton);
+            logger.info("Выбран тип виджета 'Launches table'.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Не удалось выбрать тип виджета: " + widgetTypeRadioButton, e);
-            throw new RuntimeException("Не удалось выбрать тип виджета: " + widgetTypeRadioButton, e);
+            logger.log(Level.SEVERE, "Не удалось выбрать тип виджета.", e);
+            throw new RuntimeException("Не удалось выбрать тип виджета.", e);
         }
     }
 
-
+    @Step("Переход к следующему шагу")
     public void clickNextStepButton() {
         try {
             WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(nextStepButtonBy));
@@ -71,17 +71,19 @@ public class AddWidgetWizardPage {
         }
     }
 
+    @Step("Шаг 2: Выбор фильтра для виджета")
     public void clickSelectFilterRadioButton() {
         try {
             WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(selectFilterRadioButton));
             nextButton.click();
-            logger.info("Выбран фильтр для создания виджета.");
+            logger.info("Выбран первый доступный фильтр для виджета.");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Не удалось выбрать фильтр.", e);
             throw new RuntimeException("Не удалось выбрать фильтр.", e);
         }
     }
 
+    @Step("Шаг 3: Ввод имени виджета: '{widgetName}'")
     public void enterWidgetName(String widgetName) {
         try {
             WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(widgetNameInputBy));
@@ -94,15 +96,15 @@ public class AddWidgetWizardPage {
         }
     }
 
-
+    @Step("Завершение создания виджета")
     public SpecificDashboardPage clickAddWidgetButton() {
         try {
             WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(addWidgetButtonBy));
             saveButton.click();
-            logger.info("Нажата кнопка сохранения виджета.");
+            logger.info("Нажата кнопка 'Add' для сохранения виджета.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Не удалось нажать кнопку сохранения виджета.", e);
-            throw new RuntimeException("Не удалось нажать кнопку сохранения виджета.", e);
+            logger.log(Level.SEVERE, "Не удалось нажать кнопку 'Add' для сохранения виджета.", e);
+            throw new RuntimeException("Не удалось нажать кнопку 'Add' для сохранения виджета.", e);
         }
         return new SpecificDashboardPage(driver);
     }

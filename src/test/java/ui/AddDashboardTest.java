@@ -6,8 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.*;
 import java.util.logging.Logger;
+import io.qameta.allure.*;
 
-
+@Epic("UI Тесты")
+@Feature("Дашборды")
 public class AddDashboardTest extends BaseTest {
     private static final Logger logger = Logger.getLogger(AddDashboardTest.class.getName());
 
@@ -17,22 +19,30 @@ public class AddDashboardTest extends BaseTest {
     AddNewDashboardModalPage addNewDashboardModalPage;
     SpecificDashboardPage specificDashboardPage;
 
-    @Test(description = " Проверка работы процесса создания дашборда")
+
+    @Test(description = "Создание нового дашборда и проверка его отображения")
+    @Story("Успешное создание дашборда")
+    @Severity(SeverityLevel.BLOCKER)
     public void addDashboardTest() {
+        // Arrange: Готовим тестовые данные (имя дашборда) и открываем базовый URL.
         String expectedDashboardName = TestData.generateNewName(TestData.DASHBOARD_NAME);
         driver.get(TestData.BASE_URL);
+
+        // Act: Проходим полный путь пользователя: логин, переход на страницу дашбордов, открытие модального окна и создание нового дашборда.
         loginPage = new LoginPage(driver);
         homePage = loginPage.loginAs(TestData.DEFAULT_LOGIN, TestData.DEFAULT_PASSWORD);
-        Assert.assertTrue(homePage.isAt(), "Неверная страница.");
+        Assert.assertTrue(homePage.isAt(), "После входа должна открыться домашняя страница.");
         dashboardsPage = homePage.clickDashboardsButton();
-        Assert.assertTrue(dashboardsPage.isAt(), "Неверная страница.");
+        Assert.assertTrue(dashboardsPage.isAt(), "Должна открыться страница со списком дашбордов.");
         addNewDashboardModalPage = dashboardsPage.clickOnAddNewDashboardButton();
-        Assert.assertTrue(addNewDashboardModalPage.isAt(), "Неверная страница.");
+        Assert.assertTrue(addNewDashboardModalPage.isAt(), "Должно открыться модальное окно для добавления дашборда.");
         addNewDashboardModalPage.inputDashboardName(expectedDashboardName);
         addNewDashboardModalPage.inputDescription(TestData.DASHBOARD_DESCRIPTION);
         specificDashboardPage = addNewDashboardModalPage.clickAddNewDashboardButton();
-        Assert.assertTrue(specificDashboardPage.isAt(), "Неверная страница");
+
+        // Assert: Проверяем, что после создания мы находимся на странице нового дашборда и его имя соответствует ожидаемому.
+        Assert.assertTrue(specificDashboardPage.isAt(), "После сохранения должна открыться страница созданного дашборда.");
         Assert.assertEquals(specificDashboardPage.getCurrentDashboardName().toLowerCase(),
-                expectedDashboardName.toLowerCase(), "Имя дашборда не соответствует ожидаемому.");
+                expectedDashboardName.toLowerCase(), "Имя на странице дашборда должно соответствовать заданному.");
     }
 }

@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +20,6 @@ public class SpecificDashboardPage {
     private final By pageCheckerElementBy =
             By.xpath("//button[.//span[normalize-space()='Add new widget']]\n");
 
-    // Локатор для имени дашборда в "хлебных крошках"
     private final By dashboardNameInBreadcrumbsBy =
             By.xpath("//ul[contains(@class, 'page-breadcrumbs')]//li[last()]/span");
 
@@ -28,10 +28,10 @@ public class SpecificDashboardPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(pageCheckerElementBy));
-            logger.info("SpecificDashboardPage загружена.");
+            logger.info("Страница дашборда ('SpecificDashboardPage') успешно загружена и верифицирована.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Это не страница SpecificDashboardPage. Текущий URL: " + driver.getCurrentUrl(), e);
-            throw new IllegalStateException("Это не страница SpecificDashboardPage. Текущий URL: " + driver.getCurrentUrl(), e);
+            logger.log(Level.SEVERE, "Это не страница дашборда! Текущий URL: " + driver.getCurrentUrl(), e);
+            throw new IllegalStateException("Это не страница дашборда! Текущий URL: " + driver.getCurrentUrl(), e);
         }
     }
 
@@ -39,11 +39,12 @@ public class SpecificDashboardPage {
         try {
             return wait.until(ExpectedConditions.visibilityOfElementLocated(pageCheckerElementBy)).isDisplayed();
         } catch (Exception e) {
-            logger.warning("Ключевой элемент для SpecificDashboardPage не найден.");
+            logger.warning("Проверка isAt() не удалась: это не страница дашборда.");
             return false;
         }
     }
 
+    @Step("Получение имени текущего дашборда со страницы")
     public String getCurrentDashboardName() {
         try {
             WebElement nameElement = wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardNameInBreadcrumbsBy));
@@ -51,11 +52,12 @@ public class SpecificDashboardPage {
             logger.info("Получено имя открытого дашборда: " + name);
             return name.trim();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Не удалось получить имя дашборда.", e);
-            throw new IllegalStateException("Не удалось получить имя дашборда.", e);
+            logger.log(Level.SEVERE, "Не удалось получить имя дашборда из хлебных крошек.", e);
+            throw new IllegalStateException("Не удалось получить имя дашборда из хлебных крошек.", e);
         }
     }
 
+    @Step("Нажатие на кнопку '+ Add new widget'")
     public AddWidgetWizardPage clickAddNewWidgetButton() {
         try {
             WebElement button = wait.until(ExpectedConditions.elementToBeClickable(pageCheckerElementBy));
@@ -68,6 +70,7 @@ public class SpecificDashboardPage {
         return new AddWidgetWizardPage(driver);
     }
 
+    @Step("Проверка наличия виджета с именем, начинающимся на '{widgetNamePrefix}'")
     public boolean isWidgetPresent(String widgetNamePrefix) {
 
         By specificWidgetByName = By.xpath(
@@ -80,7 +83,6 @@ public class SpecificDashboardPage {
         } catch (TimeoutException e) {
             logger.warning("Виджет с префиксом '" + widgetNamePrefix + "' НЕ найден на странице.");
             return false;
-
         }
     }
 }
