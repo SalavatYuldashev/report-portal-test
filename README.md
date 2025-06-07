@@ -1,68 +1,89 @@
-#  Report Portal Test Automation
+# Автоматизация тестирования для Report Portal
 
-Автоматизированные UI и API тесты для [demo.reportportal.io](https://demo.reportportal.io)
-Проект разработан в рамках тестового задания.
+Этот проект содержит автоматизированные UI и API тесты для демонстрационной версии Report Portal.
 
-## 📌 Используемые технологии
+## 🚀 Используемые технологии
 
-* Язык: **Java**
-* UI тесты: **Selenium WebDriver + TestNG + Page Object**
-* API тесты: **RestAssured + TestNG**
-* Сборщик: **Maven**
-* Отчёты: **Allure Report**
-* Логирование: **SLF4J + Logback**
-* Архитектура: **Page Object + BaseTest**
+| Категория       | Технология / Библиотека                                       |
+|-----------------|---------------------------------------------------------------|
+| **Язык**        | `Java 17`                                                     |
+| **UI Тесты**    | `Selenium WebDriver`, `TestNG`, `Page Object`                 |
+| **API Тесты**   | `Rest-Assured`                                                |
+| **Сборка**      | `Maven`                                                       |
+| **Отчеты**      | `Allure Report`                                               |
+| **Логирование** | `SLF4J + Logback`                                             |
+| **Архитектура** | `BaseTest`, `WebDriverFactory`, `AAA`, `Декларативный стиль`  |
 
 ## ⚙️ Установка и запуск
 
-1. Склонировать репозиторий:
+### Предварительные требования
 
-   ```bash
-   git clone https://github.com/your-username/report-portal-test.git
-   cd report-portal-test
-   ```
+*   **Java 17** (или выше)
+*   **Maven**
+*   **Allure Commandline** (для генерации отчета)
 
-2. Запустить UI или API тесты:
+### Порядок действий
 
-   ```bash
-   mvn clean test
-   ```
+1.  **Склонировать репозиторий:**
+    ```bash
+    git clone https://github.com/SalavatYuldashev/report-portal-test.git
+    cd report-portal-test
+    ```
 
-3. Сгенерировать Allure-отчёт:
+2.  **Запуск тестов:**
+    Выполнить все тесты (UI и API) на браузере по умолчанию (Firefox):
+    ```bash
+    mvn clean test
+    ```
+    
+    **Кросс-браузерный запуск UI тестов:**
+    Чтобы запустить UI тесты в конкретном браузере, используйте параметр `-Dbrowser`:
+    
+    *   **Chrome:**
+        ```bash
+        mvn clean test -Dbrowser=chrome
+        ```
+    *   **Edge:**
+        ```bash
+        mvn clean test -Dbrowser=edge
+        ```
 
-   ```bash
-   mvn allure:report
-   mvn allure:serve
-   ```
+3.  **Генерация Allure-отчета:**
+    После выполнения тестов, сгенерируйте и откройте отчет:
+    ```bash
+    allure serve target/allure-results
+    ```
+    *Отчет будет создан на основе данных в папке `target/allure-results`.*
 
-> Убедитесь, что установлен [Allure CLI](https://docs.qameta.io/allure/).
+## 🔐 Учетные данные для демо-системы
 
-## 🔐 Доступ к демо-системе
+*   **URL:** `https://demo.reportportal.io/`
+*   **Login:** `default`
+*   **Password:** `1q2w3e`
 
-* URL: [https://demo.reportportal.io](https://demo.reportportal.io)
-* Login: `default`
-* Password: `1q2w3e`
+## 🧪 Тестовое покрытие
 
-## 🔪 Покрытие тестами
+| Тип          | Сценарий                                          | Статус |
+|--------------|---------------------------------------------------|:------:|
+| **UI Test**  | Успешное создание нового дашборда                  |   ✅   |
+| **UI Test**  | Успешное добавление нового виджета на дашборд      |   ✅   |
+| **API Test** | Успешное создание, проверка и удаление дашборда (POST-GET-DELETE) |   ✅   |
+| **API Test** | Негативный тест: создание дашборда без имени       |   ✅   |
 
-| Тип          | Описание                                      | Статус |
-| ------------ | --------------------------------------------- | ------ |
-| UI Test      | Вход, переход на Dashboard, добавление Widget | ✅      |
-| API Test     | Создание Dashboard через API                  | ✅      |
-| API Negative | Негативный POST-запрос без параметров         | ✅      |
 
 ## 📂 Структура проекта
 
 ```
 src/test/java/
-├── base/            ← BaseTest с инициализацией WebDriver
-├── pages/           ← Page Object классы
-├── ui/              ← UI тесты (Selenium)
-├── api/             ← API тесты (RestAssured)
-├── utils/           ← Вспомогательные классы
+├── api/             # API тесты (RestAssured)
+├── base/            # Базовые классы для тестов (UIBaseTest, ApiBaseTest)
+├── config/          # Конфигурационные файлы и тестовые данные
+├── enums/           # Перечисления (например, типы браузеров)
+├── pages/           # Page Object классы для UI тестов
+├── ui/              # UI тесты (Selenium + TestNG)
+└── utils/           # Вспомогательные классы (WebDriverFactory, ConfigReader)
 ```
 
-
-
-🧑‍💻 Автор: Юлдашев Салават
-🗓️ Дата выполнения: 06.2025
+---
+*Автор: Юлдашев Салават*  
+*Дата обновления: Июнь 2025*

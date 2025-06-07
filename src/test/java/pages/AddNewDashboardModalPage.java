@@ -45,7 +45,7 @@ public class AddNewDashboardModalPage {
     }
 
     @Step("Ввод имени дашборда: '{name}'")
-    public void inputDashboardName(String name) {
+    public AddNewDashboardModalPage inputDashboardName(String name) {
         try {
             WebElement dashboardName = wait.until(ExpectedConditions.visibilityOfElementLocated(nameInput));
             dashboardName.sendKeys(name);
@@ -54,10 +54,11 @@ public class AddNewDashboardModalPage {
             logger.log(Level.SEVERE, "Поле 'Dashboard Name' не найдено.", e);
             throw new RuntimeException("Поле 'Dashboard Name' не найдено.", e);
         }
+        return this;
     }
 
     @Step("Ввод описания дашборда: '{description}'")
-    public void inputDescription(String description) {
+    public AddNewDashboardModalPage inputDashboardDescription(String description) {
         try {
             WebElement dashboardDescription = wait.until(ExpectedConditions.visibilityOfElementLocated(descriptionInput));
             dashboardDescription.sendKeys(description);
@@ -66,18 +67,19 @@ public class AddNewDashboardModalPage {
             logger.log(Level.SEVERE, "Поле 'Dashboard description' не найдено.", e);
             throw new RuntimeException("Поле 'Dashboard description' не найдено.", e);
         }
+        return this;
     }
 
     @Step("Нажатие на кнопку 'Add' для сохранения дашборда")
-    public SpecificDashboardPage clickAddNewDashboardButton() {
+    public DashboardPage add() {
         try {
             WebElement addNewDashboard = wait.until(ExpectedConditions.elementToBeClickable(addNewDashboardButton));
             addNewDashboard.click();
             logger.log(Level.INFO, "Нажата кнопка 'Add' для создания нового дашборда.");
-            return new SpecificDashboardPage(driver);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Кнопка 'Add' для добавления нового дашборда не найдена.", e);
             throw new RuntimeException("Кнопка 'Add' для добавления нового дашборда не найдена.", e);
         }
+        return new DashboardPage(driver);
     }
 }

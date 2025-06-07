@@ -1,54 +1,43 @@
 package ui;
 
 import base.UIBaseTest;
-import config.TestData;
 import io.qameta.allure.*;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
-import java.util.logging.Logger;
-
+import static config.TestData.*;
+import static io.qameta.allure.SeverityLevel.*;
+import static org.testng.Assert.*;
 
 @Epic("UI Тесты")
 @Feature("Виджеты")
 public class AddWidgetTest extends UIBaseTest {
-    private static final Logger logger = Logger.getLogger(AddWidgetTest.class.getName());
-
-    HomePage homePage;
-    LoginPage loginPage;
-    DashboardsPage dashboardsPage;
-    SpecificDashboardPage specificDashboardPage;
-    AddWidgetWizardPage addWidgetWizardPage;
+    private static final String newWidgetName = generateNewName(WIDGET_NAME);
 
     @Test(description = "Создание нового виджета и проверка его отображения на дашборде")
     @Story("Успешное создание виджета")
-    @Severity(SeverityLevel.BLOCKER)
+    @Severity(BLOCKER)
     public void addWidgetTest() {
-        // Arrange: Подготовка тестовых данных и открытие начальной страницы
-        String expectedWidgetName = TestData.generateNewName(TestData.WIDGET_NAME);
-        driver.get(TestData.BASE_URL);
 
-        // Act: Выполнение последовательности действий пользователя для создания виджета
-        loginPage = new LoginPage(driver);
-        homePage = loginPage.loginAs(TestData.DEFAULT_LOGIN, TestData.DEFAULT_PASSWORD);
-        Assert.assertTrue(homePage.isAt(), "После входа должна открыться домашняя страница.");
-        dashboardsPage = homePage.clickDashboardsButton();
-        Assert.assertTrue(dashboardsPage.isAt(), "Должна открыться страница со списком дашбордов.");
-        specificDashboardPage = dashboardsPage.clickOnSpecificDashboardButton();
-        Assert.assertTrue(specificDashboardPage.isAt(), "Должна открыться страница конкретного дашборда.");
-        addWidgetWizardPage = specificDashboardPage.clickAddNewWidgetButton();
-        Assert.assertTrue(addWidgetWizardPage.isAt(), "Должен открыться мастер создания виджета.");
-        addWidgetWizardPage.selectWidgetType();
-        addWidgetWizardPage.clickNextStepButton();
-        addWidgetWizardPage.clickSelectFilterRadioButton();
-        addWidgetWizardPage.clickNextStepButton();
-        addWidgetWizardPage.enterWidgetName(expectedWidgetName);
-        SpecificDashboardPage specificDashboardPage2 = addWidgetWizardPage.clickAddWidgetButton();
+        driver.get(BASE_URL);
 
-        // Assert: Проверка того, что виджет появился на дашборде
-        Assert.assertTrue(specificDashboardPage2.isAt(), "После добавления виджета должна открыться страница дашборда.");
-        Assert.assertTrue(specificDashboardPage2.isWidgetPresent(expectedWidgetName), "Созданный виджет должен присутствовать на дашборде.");
+        DashboardPage dashboard = new LoginPage(driver)
+                .loginAs(DEFAULT_LOGIN, DEFAULT_PASSWORD)
+                .goToDashboards()
+                .openDashboard()
+                .addNewWidget()
+                .selectWidgetType()
+                .next()
+                .addFilter()
+                .next()
+                .enterWidgetName(newWidgetName)
+                .add();
 
+        assertTrue(dashboard
+                        .isAt(),
+                "После добавления виджета должна открыться страница дашборда.");
+        assertTrue(dashboard
+                        .isWidgetPresent(newWidgetName),
+                "Созданный виджет должен присутствовать на дашборде.");
     }
 }

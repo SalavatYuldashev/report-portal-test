@@ -9,11 +9,4 @@
             <class name="api.CreateDashboardWithMissingNameApiTest"/>
         </classes>
     </test>
-    <!--    <test name="ChromeTests">-->
-    <!--        <parameter name="browser" value="chrome"/>-->
-    <!--        <classes>-->
-    <!--            <class name="ui.AddWidgetTest"/>-->
-    <!--            <class name="ui.AddDashboardTest"/>-->
-    <!--        </classes>-->
-    <!--    </test>-->
 </suite>

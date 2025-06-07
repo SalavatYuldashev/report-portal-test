@@ -60,7 +60,7 @@ public class LoginPage {
     }
 
     @Step("Нажатие на кнопку 'Login'")
-    public void clickLoginButton() {
+    private void clickLoginButton() {
         try {
             WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(loginButtonBy));
             loginButton.click();

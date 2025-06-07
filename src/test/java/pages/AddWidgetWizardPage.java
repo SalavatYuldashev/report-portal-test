@@ -48,7 +48,7 @@ public class AddWidgetWizardPage {
     }
 
     @Step("Шаг 1: Выбор типа виджета")
-    public void selectWidgetType() {
+    public AddWidgetWizardPage selectWidgetType() {
         try {
             WebElement widgetTypeElement = wait.until(ExpectedConditions.elementToBeClickable(widgetTypeRadioButton));
             widgetTypeElement.click();
@@ -57,10 +57,11 @@ public class AddWidgetWizardPage {
             logger.log(Level.SEVERE, "Не удалось выбрать тип виджета.", e);
             throw new RuntimeException("Не удалось выбрать тип виджета.", e);
         }
+        return this;
     }
 
     @Step("Переход к следующему шагу")
-    public void clickNextStepButton() {
+    public AddWidgetWizardPage next() {
         try {
             WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(nextStepButtonBy));
             nextButton.click();
@@ -69,10 +70,11 @@ public class AddWidgetWizardPage {
             logger.log(Level.SEVERE, "Не удалось нажать кнопку 'Next step >'.", e);
             throw new RuntimeException("Не удалось нажать кнопку 'Next step >'.", e);
         }
+        return this;
     }
 
     @Step("Шаг 2: Выбор фильтра для виджета")
-    public void clickSelectFilterRadioButton() {
+    public AddWidgetWizardPage addFilter() {
         try {
             WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(selectFilterRadioButton));
             nextButton.click();
@@ -81,10 +83,11 @@ public class AddWidgetWizardPage {
             logger.log(Level.SEVERE, "Не удалось выбрать фильтр.", e);
             throw new RuntimeException("Не удалось выбрать фильтр.", e);
         }
+        return this;
     }
 
     @Step("Шаг 3: Ввод имени виджета: '{widgetName}'")
-    public void enterWidgetName(String widgetName) {
+    public AddWidgetWizardPage enterWidgetName(String widgetName) {
         try {
             WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(widgetNameInputBy));
             nameInput.clear();
@@ -94,10 +97,11 @@ public class AddWidgetWizardPage {
             logger.log(Level.SEVERE, "Не удалось ввести имя виджета: " + widgetName, e);
             throw new RuntimeException("Не удалось ввести имя виджета: " + widgetName, e);
         }
+        return this;
     }
 
     @Step("Завершение создания виджета")
-    public SpecificDashboardPage clickAddWidgetButton() {
+    public DashboardPage add() {
         try {
             WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(addWidgetButtonBy));
             saveButton.click();
@@ -106,6 +110,6 @@ public class AddWidgetWizardPage {
             logger.log(Level.SEVERE, "Не удалось нажать кнопку 'Add' для сохранения виджета.", e);
             throw new RuntimeException("Не удалось нажать кнопку 'Add' для сохранения виджета.", e);
         }
-        return new SpecificDashboardPage(driver);
+        return new DashboardPage(driver);
     }
 }

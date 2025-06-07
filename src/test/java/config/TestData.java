@@ -1,5 +1,6 @@
 package config;
 
+import utils.ConfigReader;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,10 +8,10 @@ import java.time.format.DateTimeFormatter;
 public final class TestData {
     private TestData() {}
 
-    public static final String DEFAULT_LOGIN = "default";
-    public static final String DEFAULT_PASSWORD = "1q2w3e";
+    public static final String DEFAULT_LOGIN = ConfigReader.getProperty("default.login");
+    public static final String DEFAULT_PASSWORD = ConfigReader.getProperty("default.password");
 
-    public static final String BASE_URL = "https://demo.reportportal.io/";
+    public static final String BASE_URL = ConfigReader.getProperty("base.url") + "/";
 
     public static final String UI_DASHBOARD_NAME = "UIDashboardTest";
     public static final String API_DASHBOARD_NAME = "APIDashboardTest";

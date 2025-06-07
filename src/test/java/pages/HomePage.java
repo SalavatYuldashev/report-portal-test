@@ -42,7 +42,7 @@ public class HomePage {
     }
 
     @Step("Нажатие на кнопку 'Dashboards' в главном меню")
-    public DashboardsPage clickDashboardsButton() {
+    public DashboardsPage goToDashboards() {
         WebElement dashboardsButton;
         try {
             dashboardsButton = wait.until(ExpectedConditions.elementToBeClickable(homePageCheckerBy));

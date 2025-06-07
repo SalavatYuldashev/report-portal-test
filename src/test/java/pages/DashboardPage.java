@@ -12,8 +12,8 @@ import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SpecificDashboardPage {
-    private static final Logger logger = Logger.getLogger(SpecificDashboardPage.class.getName());
+public class DashboardPage {
+    private static final Logger logger = Logger.getLogger(DashboardPage.class.getName());
     protected WebDriver driver;
     protected WebDriverWait wait;
 
@@ -23,7 +23,7 @@ public class SpecificDashboardPage {
     private final By dashboardNameInBreadcrumbsBy =
             By.xpath("//ul[contains(@class, 'page-breadcrumbs')]//li[last()]/span");
 
-    public SpecificDashboardPage(WebDriver driver) {
+    public DashboardPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
@@ -58,7 +58,7 @@ public class SpecificDashboardPage {
     }
 
     @Step("Нажатие на кнопку '+ Add new widget'")
-    public AddWidgetWizardPage clickAddNewWidgetButton() {
+    public AddWidgetWizardPage addNewWidget() {
         try {
             WebElement button = wait.until(ExpectedConditions.elementToBeClickable(pageCheckerElementBy));
             button.click();
@@ -72,7 +72,6 @@ public class SpecificDashboardPage {
 
     @Step("Проверка наличия виджета с именем, начинающимся на '{widgetNamePrefix}'")
     public boolean isWidgetPresent(String widgetNamePrefix) {
-
         By specificWidgetByName = By.xpath(
                 String.format("//div[contains(@class, 'widgetHeader__widget-name-block') " +
                         "and starts-with(normalize-space(), '%s')]", widgetNamePrefix));

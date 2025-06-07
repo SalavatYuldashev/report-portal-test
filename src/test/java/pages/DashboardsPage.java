@@ -42,7 +42,7 @@ public class DashboardsPage {
     }
 
     @Step("Нажатие на кнопку 'Add New Dashboard'")
-    public AddNewDashboardModalPage clickOnAddNewDashboardButton() {
+    public AddNewDashboardModalPage addNewDashboard() {
         WebElement addNewDashboardButton;
         try {
             addNewDashboardButton = wait.until(ExpectedConditions.elementToBeClickable(dashboardsCheckerBy));
@@ -56,7 +56,7 @@ public class DashboardsPage {
     }
 
     @Step("Открытие первого дашборда в списке")
-    public SpecificDashboardPage clickOnSpecificDashboardButton() {
+    public DashboardPage openDashboard() {
         WebElement selectedDashboardButton;
         try {
             selectedDashboardButton = wait.until(ExpectedConditions.elementToBeClickable(specificDashboardButton));
@@ -66,6 +66,6 @@ public class DashboardsPage {
             logger.log(Level.SEVERE, "Не удалось найти или нажать на дашборд в списке.", e);
             throw new RuntimeException("Не удалось найти или нажать на дашборд в списке.", e);
         }
-        return new SpecificDashboardPage(driver);
+        return new DashboardPage(driver);
     }
 }
